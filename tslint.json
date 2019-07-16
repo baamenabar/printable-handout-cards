@@ -1,16 +1,16 @@
 {
-  "defaultSeverity": "warning",
-  "extends": ["tslint:recommended"],
-  "linterOptions": {
-    "exclude": ["node_modules/**"]
-  },
-  "rules": {
-    "indent": [true, "spaces", 4],
-    "interface-name": false,
-    "member-access": [true, "no-public"],
-    "no-consecutive-blank-lines": false,
-    "object-literal-sort-keys": false,
-    "ordered-imports": false,
-    "quotemark": [true, "single"]
-  }
+    "defaultSeverity": "warning",
+    "extends": ["tslint:recommended"],
+    "linterOptions": {
+        "exclude": ["node_modules/**", "*.json", "**/*.json"]
+    },
+    "rules": {
+        "indent": [true, "spaces", 4],
+        "interface-name": false,
+        "member-access": [true, "no-public"],
+        "no-consecutive-blank-lines": false,
+        "object-literal-sort-keys": false,
+        "ordered-imports": false,
+        "quotemark": [true, "single"]
+    }
 }

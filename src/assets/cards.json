@@ -1,0 +1,19 @@
+[
+    {
+        "name": "Twin Ram Warmaul of swift silence",
+        "slug": "longhammer-of-silence",
+        "price": 48000,
+        "aura": "tenue",
+        "summary": "Dwarven Longhammer +5",
+        "description": "Heavy Longhammer with one ream on each head. On complete darkness it has a faint white glow. When it hits inamimate matter the glow is perceptible in any light conditions. The hit will sound unnaturally quiet.",
+        "imageUrl": "https://i.pinimg.com/564x/37/e4/42/37e442a755e3a8d39b4480f7653f16cb.jpg"
+    },
+    {
+        "name": "Amuleto contra la pretrificación",
+        "slug": "amulet-against-petrification",
+        "price": 8000,
+        "aura": "tenue",
+        "description": "Whenever the wearer fails a saving throw that would result in him being turned to stone, he is instead staggered for 1d6 rounds. If a spell or effect turns him to stone without allowing a saving throw, he is instead staggered for 1 minute. These abilities do not function while the wearer is staggered.",
+        "imageUrl": "https://i.pinimg.com/236x/67/38/08/67380862516ef9460f499935d21f30fb.jpg"
+    }
+]
