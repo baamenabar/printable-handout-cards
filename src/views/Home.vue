@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <h1 class="main-title">Printable Cards</h1>
     <CardListComponent></CardListComponent>
   </div>
 </template>
