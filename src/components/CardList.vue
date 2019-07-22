@@ -7,16 +7,32 @@
 
 <script lang=ts>
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import cardListData from '../assets/cards.json';
+import { State, Action, Getter } from 'vuex-class';
 import CardComponent from './Card/Card.vue';
 import { Card } from './Card/CardInterface';
+import { cardList } from '../store/cards';
+import { CardListState } from '../store/cards/types';
 
+// config for this instance of the store
+const namespace = 'cardList';
+
+/**
+ * Initilizes the cardList store and renders the cards
+ */
 @Component({ components: { CardComponent } })
 export default class CardListComponent extends Vue {
-    list: Card[] = [];
+    @State('cardList') cardList!: CardListState;
+
+    // 🤮 ... try out this: https://dev.to/sirtimbly/type-safe-vuex-state-usage-in-components-without-decorators-2b24
+    @Action('loadCards', { namespace }) loadCards: any;
+    @Getter('totalCards', { namespace }) totalCards: number = 0;
 
     mounted() {
-        this.list = cardListData;
+        this.loadCards();
+    }
+
+    get list(): Card[] {
+        return this.cardList.list;
     }
 }
 </script>
