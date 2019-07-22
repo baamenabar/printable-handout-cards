@@ -5,6 +5,7 @@
         "exclude": ["node_modules/**", "*.json", "**/*.json"]
     },
     "rules": {
+        "arrow-parens": false,
         "indent": [true, "spaces", 4],
         "interface-name": false,
         "member-access": [true, "no-public"],
