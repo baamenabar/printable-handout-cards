@@ -17,11 +17,26 @@ const actions: ActionTree<CardListState, RootState> = {
         // commit the mutation
         commit('cardsLoaded', cardListData);
     },
+    addCard({ commit }): void {
+        commit('cardAdded');
+    },
+    deleteCard({ commit }, slug: string): void {
+        commit('cardRemoved', slug);
+    },
 };
 
 const mutations: MutationTree<CardListState> = {
     cardsLoaded(state: CardListState, payload: StoreCard[]): void {
         state.list = payload;
+    },
+    cardAdded(state: CardListState): void {
+        state.list.push({
+            name: 'new card',
+            slug: '' + new Date().getTime(),
+        });
+    },
+    cardRemoved(state: CardListState, slug: string): void {
+        state.list.splice(state.list.findIndex(card => card.slug === slug), 1);
     },
 };
 

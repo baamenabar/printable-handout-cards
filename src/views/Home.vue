@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+// @ts-ignore
 import CardListComponent from '@/components/CardList';
 
 @Component({
