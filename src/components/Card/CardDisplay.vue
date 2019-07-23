@@ -5,7 +5,10 @@
     </div>
     <div class="body">
       <div class="fig-container">
-        <button v-if="editable" type="button" class="btn">edit</button>
+        <form v-on:submit.prevent="updateImageSrc" v-if="editable" class="img-src-form">
+          <input type="url" name="imgSrc" :value="item.imageUrl" class="src-input" />
+          <button class="btn">update</button>
+        </form>
         <img :src="item.imageUrl" alt class="figure" />
       </div>
       <p class="summary">{{item.summary}}</p>
@@ -18,11 +21,21 @@
 import Vue from 'vue';
 import { PropSync, Prop, Component } from 'vue-property-decorator';
 import { Card } from './CardInterface';
+import { Action } from 'vuex-class';
 
 @Component
 export default class CardDisplayComponent extends Vue {
+    @Action('updateCardImage', { namespace: 'cardList' }) updateCardImage: any;
     @Prop() item!: Card;
     @Prop() editable = false;
+
+    updateImageSrc(event: Event): void {
+        console.log(
+            'Submitted',
+            // @ts-ignore
+            (event.target as HTMLFormElement).elements.imgSrc.value
+        );
+    }
 }
 </script>
 
@@ -35,7 +48,16 @@ export default class CardDisplayComponent extends Vue {
     padding: 0.25em;
     color: #fff;
 }
-
+.fig-container {
+    position: relative;
+}
+.img-src-form {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
 .figure {
     width: 100%;
     max-width: 100%;
