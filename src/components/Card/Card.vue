@@ -1,6 +1,11 @@
 <template>
   <div class="card">
-    <button class="btn edit-btn" @click="editable = !editable" aria-label="edit toggle">edit</button>
+    <button
+      class="btn edit-btn"
+      @click="editable = !editable"
+      aria-label="edit toggle"
+      v-text="editable ? 'save' : 'edit'"
+    ></button>
     <button
       class="btn delete-btn"
       aria-label="delete card"

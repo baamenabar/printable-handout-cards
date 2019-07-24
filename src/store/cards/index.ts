@@ -2,6 +2,7 @@ import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { CardListState, StoreCard } from './types';
 import { RootState } from '../types';
 import cardListData from '../../assets/cards.json';
+import { Card } from '@/components/Card/CardInterface';
 
 const namespaced = true;
 
@@ -23,6 +24,9 @@ const actions: ActionTree<CardListState, RootState> = {
     deleteCard({ commit }, slug: string): void {
         commit('cardRemoved', slug);
     },
+    updateCardData({ commit }, payload: Card): void {
+        commit('cardUpdated', payload);
+    },
 };
 
 const mutations: MutationTree<CardListState> = {
@@ -33,10 +37,17 @@ const mutations: MutationTree<CardListState> = {
         state.list.push({
             name: 'new card',
             slug: '' + new Date().getTime(),
+            description: '',
+            imageUrl: '',
         });
     },
     cardRemoved(state: CardListState, slug: string): void {
         state.list.splice(state.list.findIndex(card => card.slug === slug), 1);
+    },
+    cardUpdated(state: CardListState, payload: Card): void {
+        console.log('card Updated called', payload);
+        const index = state.list.findIndex(card => card.slug === payload.slug);
+        state.list[index] = { ...payload };
     },
 };
 

@@ -3,7 +3,6 @@ export interface Card {
     slug: string;
     weight?: string;
     price?: number;
-    summary?: string;
     description?: string;
     imageUrl?: string;
 }

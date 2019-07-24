@@ -2,11 +2,12 @@
   <div class="list">
     <CardComponent v-for="(card, i) of list" :card="card" :index="i" :key="card.slug"></CardComponent>
     <button type="button" class="add-btn btn" aria-label="add" @click="addCard()">+</button>
+    <p class="counter">add one card to the {{totalCards}} existing cards</p>
   </div>
 </template>
 
 <script lang=ts>
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { State, Action, Getter } from 'vuex-class';
 import CardComponent from './Card/Card.vue';
 import { Card } from './Card/CardInterface';
@@ -26,7 +27,7 @@ export default class CardListComponent extends Vue {
     // 🤮 ... try out this: https://dev.to/sirtimbly/type-safe-vuex-state-usage-in-components-without-decorators-2b24
     @Action('loadCards', { namespace }) loadCards: any;
     @Action('addCard', { namespace }) addCard: any;
-    @Getter('totalCards', { namespace }) totalCards: number = 0;
+    @Getter('totalCards', { namespace }) totalCards!: number;
 
     mounted() {
         this.loadCards();
@@ -78,5 +79,10 @@ export default class CardListComponent extends Vue {
         box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.3);
         background-color: seagreen;
     }
+}
+.counter {
+    position: absolute;
+    bottom: 0;
+    right: 20px;
 }
 </style>

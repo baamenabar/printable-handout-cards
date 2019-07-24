@@ -1,39 +1,65 @@
 <template>
   <div class="content">
     <div class="header">
-      <h1 class="name" :contenteditable="editable">{{item.name}}</h1>
+      <h1 class="name" ref="name" :contenteditable="editable">{{item.name}}</h1>
     </div>
     <div class="body">
       <div class="fig-container">
-        <form v-on:submit.prevent="updateImageSrc" v-if="editable" class="img-src-form">
-          <input type="url" name="imgSrc" :value="item.imageUrl" class="src-input" />
-          <button class="btn">update</button>
-        </form>
+        <div v-if="editable" class="fig-src-container">
+          <input type="url" ref="imageInput" name="imgSrc" :value="item.imageUrl" class="src-input" />
+        </div>
         <img :src="item.imageUrl" alt class="figure" />
       </div>
-      <p class="summary">{{item.summary}}</p>
-      <div class="description">{{item.description}}</div>
+      <textarea
+        v-if="editable"
+        ref="descriptionEditor"
+        class="description-editor"
+        :value="item.description"
+      ></textarea>
+      <div v-else class="description" v-html="compiledMarkdown"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { PropSync, Prop, Component } from 'vue-property-decorator';
+import { PropSync, Prop, Component, Watch } from 'vue-property-decorator';
 import { Card } from './CardInterface';
 import { Action } from 'vuex-class';
+import marked from 'marked';
+import dompurify from 'dompurify';
 
 @Component
 export default class CardDisplayComponent extends Vue {
-    @Action('updateCardImage', { namespace: 'cardList' }) updateCardImage: any;
+    @Action('updateCardData', { namespace: 'cardList' }) updateCardData: any;
     @Prop() item!: Card;
     @Prop() editable = false;
 
-    updateImageSrc(event: Event): void {
-        console.log(
-            'Submitted',
-            // @ts-ignore
-            (event.target as HTMLFormElement).elements.imgSrc.value
+    @Watch('editable') onEditableChanged(
+        val: boolean,
+        prevValue: boolean
+    ): void {
+        // if the previous value was false, we area just entering into edit mode, no need to save.
+        if (!prevValue) {
+            return;
+        }
+        this.updateCardData(this.getData());
+    }
+
+    getData(): Card {
+        return {
+            slug: this.item.slug,
+            name: (this.$refs.name as HTMLElement).innerText,
+            imageUrl: (this.$refs.imageInput as HTMLInputElement).value,
+            description: (this.$refs.descriptionEditor as HTMLInputElement)
+                .value,
+        };
+        // https://i.pinimg.com/236x/28/f6/7c/28f67c6da291522c8b49db26cbfe15ab.jpg
+    }
+
+    get compiledMarkdown(): string {
+        return dompurify.sanitize(
+            marked(this.item.description || '', { breaks: true })
         );
     }
 }
@@ -51,7 +77,7 @@ export default class CardDisplayComponent extends Vue {
 .fig-container {
     position: relative;
 }
-.img-src-form {
+.fig-src-container {
     width: 100%;
     position: absolute;
     top: 0;
@@ -61,6 +87,13 @@ export default class CardDisplayComponent extends Vue {
 .figure {
     width: 100%;
     max-width: 100%;
+}
+
+.description-editor {
+    width: 100%;
+    min-height: 250px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .price {
