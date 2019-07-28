@@ -12,6 +12,10 @@ Mostly to play with Vuex
 
 I need something to make and print nice handouts for the Pathfinder RPG game I am playing with my kids.
 
+---
+
+Simple editor of flash cards/handouts with title, image and text field. Text field with markdown sopport. Conceived for a DnD campaign, built as an excercise of Vuejs, Typescript and Vuex (redux).
+
 # Vuejs docs
 
 remove these later

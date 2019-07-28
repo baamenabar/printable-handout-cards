@@ -1,17 +1,19 @@
 <template>
   <div class="card">
-    <button
-      class="btn edit-btn"
-      @click="editable = !editable"
-      aria-label="edit toggle"
-      v-text="editable ? 'save' : 'edit'"
-    ></button>
-    <button
-      class="btn delete-btn"
-      aria-label="delete card"
-      v-if="editable"
-      @click="deleteCard(item.slug)"
-    >delete</button>
+    <div class="toolbar">
+      <button
+        class="btn delete-btn"
+        aria-label="delete card"
+        v-if="editable"
+        @click="deleteCard(item.slug)"
+      >delete</button>
+      <button
+        class="btn edit-btn"
+        @click="editable = !editable"
+        aria-label="edit toggle"
+        v-text="editable ? 'save' : 'edit'"
+      ></button>
+    </div>
     <CardDisplayComponent :item="item" :editable="editable"></CardDisplayComponent>
   </div>
 </template>
@@ -39,18 +41,38 @@ export default class CardComponent extends Vue {
 
 <style lang="scss" scoped>
 .card {
+    position: relative;
     width: 260px;
-    margin: 1em;
     border: 1px solid #999;
-    background-color: #eee;
+    margin: 1em;
     padding: 6px 12px;
+    text-align: left;
+    background-color: #eee;
     box-shadow: 2px 2px 12px 0 rgba(black, 0.2);
+
     @media print {
         width: 7cm;
     }
 }
+.toolbar {
+    width: 100%;
+    position: absolute;
+    top: -22px;
+    right: 12px;
+    text-align: right;
+
+    // animation related props
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s all ease-in-out;
+
+    .card:hover & {
+        visibility: visible;
+        opacity: 1;
+    }
+}
 .btn {
-    margin: 0 4px;
+    margin: 0 0 0 8px;
 }
 .edit-btn {
 }

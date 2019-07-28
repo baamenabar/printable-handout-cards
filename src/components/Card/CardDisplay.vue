@@ -4,10 +4,17 @@
       <h1 class="name" ref="name" :contenteditable="editable">{{item.name}}</h1>
     </div>
     <div class="body">
-      <div class="fig-container">
-        <div v-if="editable" class="fig-src-container">
-          <input type="url" ref="imageInput" name="imgSrc" :value="item.imageUrl" class="src-input" />
-        </div>
+      <div class="fig__container">
+        <label v-if="editable" class="fig__src-container">
+          <span class="fig__src-input-label">Image url</span>
+          <input
+            type="url"
+            ref="imageInput"
+            name="imgSrc"
+            :value="item.imageUrl"
+            class="fig__src-input"
+          />
+        </label>
         <img :src="item.imageUrl" alt class="figure" />
       </div>
       <textarea
@@ -70,19 +77,32 @@ export default class CardDisplayComponent extends Vue {
     background-color: #222;
 }
 .name {
+    text-align: center;
     font-size: 20px;
     padding: 0.25em;
     color: #fff;
 }
-.fig-container {
+.fig__container {
     position: relative;
 }
-.fig-src-container {
+.fig__src-container {
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
+    padding: 4px 0;
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    background: white;
     z-index: 1;
+}
+.fig__src-input-label {
+    margin-right: 4px;
+}
+.fig__src-input {
+    line-height: 1.75;
+    flex-grow: 1;
 }
 .figure {
     width: 100%;

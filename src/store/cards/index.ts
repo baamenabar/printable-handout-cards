@@ -45,16 +45,26 @@ const mutations: MutationTree<CardListState> = {
         state.list.splice(state.list.findIndex(card => card.slug === slug), 1);
     },
     cardUpdated(state: CardListState, payload: Card): void {
-        console.log('card Updated called', payload);
         const index = state.list.findIndex(card => card.slug === payload.slug);
         state.list[index] = { ...payload };
+
+        // force triggering the "list" getter
+        state.list = [...state.list];
     },
 };
 
-// just to  create the structure I make this dumb getter
+// Use getters fo all properties of the state you want to have checked for changes.
 const getters: GetterTree<CardListState, RootState> = {
+    // dumb getter
     totalCards(state): number {
         return state.list.length;
+    },
+
+    /**
+     * This is the main holder of  data in the cardlist
+     */
+    list(state: CardListState): Card[] {
+        return state.list;
     },
 };
 

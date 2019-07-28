@@ -22,19 +22,14 @@ const namespace = 'cardList';
  */
 @Component({ components: { CardComponent } })
 export default class CardListComponent extends Vue {
-    @State('cardList') cardList!: CardListState;
-
     // 🤮 ... try out this: https://dev.to/sirtimbly/type-safe-vuex-state-usage-in-components-without-decorators-2b24
     @Action('loadCards', { namespace }) loadCards: any;
     @Action('addCard', { namespace }) addCard: any;
     @Getter('totalCards', { namespace }) totalCards!: number;
+    @Getter('list', { namespace }) list!: Card[];
 
     mounted() {
         this.loadCards();
-    }
-
-    get list(): Card[] {
-        return this.cardList.list;
     }
 }
 </script>
