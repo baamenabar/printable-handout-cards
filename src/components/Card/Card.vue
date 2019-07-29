@@ -42,16 +42,18 @@ export default class CardComponent extends Vue {
 <style lang="scss" scoped>
 .card {
     position: relative;
+    box-sizing: border-box;
     width: 260px;
     border: 1px solid #999;
-    margin: 1em;
+    margin: 1em 0.5em;
     padding: 6px 12px;
     text-align: left;
     background-color: #eee;
     box-shadow: 2px 2px 12px 0 rgba(black, 0.2);
 
     @media print {
-        width: 7cm;
+        width: 33%;
+        margin: 1em 0.151515%;
     }
 }
 .toolbar {
