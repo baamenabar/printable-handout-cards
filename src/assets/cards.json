@@ -14,5 +14,12 @@
         "aura": "tenue",
         "description": "Whenever the wearer fails a saving throw that would result in him being turned to stone, he is instead staggered for 1d6 rounds. If a spell or effect turns him to stone without allowing a saving throw, he is instead staggered for 1 minute. These abilities do not function while the wearer is staggered.",
         "imageUrl": "https://i.pinimg.com/236x/67/38/08/67380862516ef9460f499935d21f30fb.jpg"
+    },
+    {
+        "name": "Oscurón",
+        "slug": "oscuron",
+        "aura": "fuerte",
+        "description": "El maestro de Oscurón era un mago de Selpysi, Glipfter. Oscurón aprendió Necromancia y Glipfter lo echó de la ciudad por estudiar las artes oscuras, agregando su nombre a las runas que protegen a la ciudad. Oscurón no  puede entrar a la ciudad, por eso vive en las ruinas y siempre ha necesitado  un asistente  para hacer sus negocios y compras, alguien quien pueda entrar a la ciudad. Uno de estos asistentes fue Tontín secuas, quien no recuerda nunca haber estado en Emik, al parecer Oscurón lo compró y despertó una vez en Selpysi, o eso cree Tontín Secuás.\n\nAl cabo de muchos años Tontín Secuás se aburrió de hacer siempre lo mismo, estaba aprendiendo magia, pero quería saber más, pero, por alguna razón no se atrevía a hacer Necromancia, le parecía asqueroso. Le robó a su maestro y se arrancó en el siguiente barco que salió del  puerto hacia Ordoche.",
+        "imageUrl": "https://cdnb.artstation.com/p/assets/images/images/010/522/605/large/mohammx-noureddini-57.jpg"
     }
 ]

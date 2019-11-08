@@ -1,8 +1,11 @@
-import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
+// import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
+import { Module, VuexModule } from 'vuex-module-decorators';
+import Store from '../index';
 import { CardListState, StoreCard } from './types';
 import { RootState } from '../types';
 import cardListData from '../../assets/cards.json';
 import { Card } from '@/components/Card/CardInterface';
+import { ActionTree, MutationTree, GetterTree } from 'vuex';
 
 const namespaced = true;
 
@@ -67,11 +70,16 @@ const getters: GetterTree<CardListState, RootState> = {
         return state.list;
     },
 };
-
-export const cardList: Module<CardListState, RootState> = {
+@Module({
+    dynamic: true,
+    store: Store,
+    name: 'cardList',
+    namespaced: true,
+})
+export default class store extends VuexModule {
     namespaced,
     state: cardListState,
     getters,
     actions,
     mutations,
-};
+}

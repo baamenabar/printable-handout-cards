@@ -46,7 +46,7 @@ export default class CardDisplayComponent extends Vue {
         val: boolean,
         prevValue: boolean
     ): void {
-        // if the previous value was false, we area just entering into edit mode, no need to save.
+        // if the previous value was false, we are just entering into edit mode, no need to save.
         if (!prevValue) {
             return;
         }
