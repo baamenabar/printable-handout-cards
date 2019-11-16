@@ -16,6 +16,7 @@ export const cardList: Module<CardListState, RootState> = {
     },
     actions: {
         loadCards: jest.fn(),
+        addCard: jest.fn(),
     },
     mutations: {},
 };

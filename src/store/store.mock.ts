@@ -1,4 +1,4 @@
-import { cardList } from '@/store/cards/card-list.mock';
+import { cardList } from './cards/card-list.mock';
 import { StoreOptions } from 'vuex';
 import { RootState } from './types';
 
