@@ -16,5 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import NavigationMenuComponent from './NavigationMenu.vue';
 
 @Component({ components: { NavigationMenuComponent } })
-export default class NavigationComponent extends Vue {}
+export default class NavigationComponent extends Vue {
+    menuIsShown = false;
+}
 </script>
