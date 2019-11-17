@@ -7,7 +7,7 @@ describe('Home View', () => {
         wrapper = shallowMount<Home>(Home);
     });
 
-    it('Should render a title', () => {
+    it('Should render', () => {
         expect(wrapper.isVueInstance()).toBeTruthy();
 
         // to keep a note about how  to  directly access a prop
@@ -20,7 +20,9 @@ describe('Home View', () => {
 
         // Thie above is a bug, check here:
         // https://github.com/vuejs/vue-test-utils/issues/255#issuecomment-408810553
+    });
 
-        expect(wrapper.find('.main-title').text()).toBe('Printable Cards');
+    it('Should render CardListComponent', () => {
+        expect(wrapper.find({ name: 'CardListComponent' }).exists()).toBe(true);
     });
 });

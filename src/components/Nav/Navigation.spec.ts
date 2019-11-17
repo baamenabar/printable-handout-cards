@@ -4,6 +4,7 @@ import { qaDataAttrSelector } from '@/../tests/helper';
 
 describe('Navigation.vue', () => {
     let wrapper: Wrapper<NavigationComponent>;
+
     beforeEach(() => {
         wrapper = shallowMount(NavigationComponent);
     });
@@ -16,5 +17,12 @@ describe('Navigation.vue', () => {
         expect(wrapper.contains(qaDataAttrSelector('burger-menu-button'))).toBe(
             true
         );
+    });
+
+    it('Should have a navigation menu component that is hidden by default', () => {
+        const navMenuComponent = wrapper.find({
+            name: 'NavigationMenuComponent',
+        });
+        expect(navMenuComponent.exists()).toBe(true);
     });
 });

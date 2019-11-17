@@ -7,12 +7,14 @@
         >
             menu
         </button>
+        <NavigationMenuComponent></NavigationMenuComponent>
     </nav>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import NavigationMenuComponent from './NavigationMenu.vue';
 
-@Component({})
+@Component({ components: { NavigationMenuComponent } })
 export default class NavigationComponent extends Vue {}
 </script>

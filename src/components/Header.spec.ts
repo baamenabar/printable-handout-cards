@@ -37,6 +37,8 @@ describe('Header.vue', () => {
         ).toBe('/');
     });
     it('Should have a navigation component', () => {
-        expect(wrapper.contains('NavigationComponent'));
+        expect(wrapper.find({ name: 'NavigationComponent' }).exists()).toBe(
+            true
+        );
     });
 });
