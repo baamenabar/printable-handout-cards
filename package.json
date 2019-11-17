@@ -7,7 +7,8 @@
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
         "test:e2e": "vue-cli-service test:e2e",
-        "test:unit": "vue-cli-service test:unit"
+        "test:unit": "vue-cli-service test:unit",
+        "test:unit:watch": "vue-cli-service test:unit --watch"
     },
     "dependencies": {
         "@types/dompurify": "0.0.33",
@@ -35,7 +36,7 @@
         "babel-core": "7.0.0-bridge.0",
         "node-sass": "^4.9.0",
         "sass-loader": "^7.3.1",
-        "ts-jest": "^23.0.0",
+        "ts-jest": "^24.1.0",
         "typescript": "^3.4.3",
         "vue-template-compiler": "^2.6.10"
     }

@@ -1,9 +1,15 @@
 <template>
-  <div class="list">
-    <CardComponent v-for="(card, i) of list" :card="card" :index="i" :key="card.slug"></CardComponent>
-    <button type="button" class="add-btn btn" aria-label="add" @click="addCard()">+</button>
-    <p class="counter">add one card to the {{totalCards}} existing cards</p>
-  </div>
+    <div class="list">
+        <CardComponent v-for="(card, i) of list" :card="card" :index="i" :key="card.slug"></CardComponent>
+        <button
+            type="button"
+            class="add-btn btn"
+            aria-label="add"
+            @click="addCard()"
+            data-automationid="add-button"
+        >+</button>
+        <p class="counter">add one card to the {{totalCards}} existing cards</p>
+    </div>
 </template>
 
 <script lang=ts>
