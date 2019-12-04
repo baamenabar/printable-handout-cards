@@ -9,7 +9,7 @@ type FirebaseUser = firebase.User;
 
 const userStateInitial: UserState = {
     isLoggedIn: false,
-    isGeneric: true,
+    isAnonymous: true,
     name: '',
     email: '',
 };
@@ -23,15 +23,7 @@ const actions: ActionTree<UserState, RootState> = {
                 commit('userUpdate', firebaseUser);
             } else {
                 // if not logged in, then log in with the generic user.
-                await firebase
-                    .auth()
-                    .signInWithEmailAndPassword(
-                        'agustin@medula.cl',
-                        'qwertzztrewq'
-                    )
-                    .catch(reason => {
-                        console.log('FAILED GENERIC LOGIN BEACAUSE:', reason);
-                    });
+                firebase.auth().signInAnonymously();
             }
         });
     },
@@ -52,7 +44,7 @@ const actions: ActionTree<UserState, RootState> = {
 const mutations: MutationTree<UserState> = {
     userUpdate(state: UserState, firebaseUser: FirebaseUser): void {
         state.isLoggedIn = true;
-        state.isGeneric = firebaseUser.isAnonymous;
+        state.isAnonymous = firebaseUser.isAnonymous;
         state.name = firebaseUser.displayName || '';
         // tslint:disable:no-console
         console.log('user firebaseUser', firebaseUser);

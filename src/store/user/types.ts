@@ -1,6 +1,6 @@
 export interface UserState {
     isLoggedIn: boolean;
-    isGeneric: boolean;
+    isAnonymous: boolean;
     name: string;
     email: string;
 }
