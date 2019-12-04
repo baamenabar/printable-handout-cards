@@ -1,31 +1,33 @@
 <template>
-  <div class="content">
-    <div class="header">
-      <h1 class="name" ref="name" :contenteditable="editable">{{item.name}}</h1>
+    <div class="content">
+        <div class="header">
+            <h1 class="name" ref="name" :contenteditable="editable">
+                {{ item.name }}
+            </h1>
+        </div>
+        <div class="body">
+            <div class="fig__container">
+                <label v-if="editable" class="fig__src-container">
+                    <span class="fig__src-input-label">Image url</span>
+                    <input
+                        type="url"
+                        ref="imageInput"
+                        name="imgSrc"
+                        :value="item.imageUrl"
+                        class="fig__src-input"
+                    />
+                </label>
+                <img :src="item.imageUrl" alt class="figure" />
+            </div>
+            <textarea
+                v-if="editable"
+                ref="descriptionEditor"
+                class="description-editor"
+                :value="item.description"
+            ></textarea>
+            <div v-else class="description" v-html="compiledMarkdown"></div>
+        </div>
     </div>
-    <div class="body">
-      <div class="fig__container">
-        <label v-if="editable" class="fig__src-container">
-          <span class="fig__src-input-label">Image url</span>
-          <input
-            type="url"
-            ref="imageInput"
-            name="imgSrc"
-            :value="item.imageUrl"
-            class="fig__src-input"
-          />
-        </label>
-        <img :src="item.imageUrl" alt class="figure" />
-      </div>
-      <textarea
-        v-if="editable"
-        ref="descriptionEditor"
-        class="description-editor"
-        :value="item.description"
-      ></textarea>
-      <div v-else class="description" v-html="compiledMarkdown"></div>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -84,6 +86,7 @@ export default class CardDisplayComponent extends Vue {
 }
 .fig__container {
     position: relative;
+    min-height: 44px;
 }
 .fig__src-container {
     width: 100%;

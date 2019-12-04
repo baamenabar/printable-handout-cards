@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './types';
 import { cardList } from './cards';
+import { user } from './user/user';
+
 /**
  * This is the main Store file,
  * from here all store modules get imported
@@ -18,6 +20,7 @@ const options: StoreOptions<RootState> = {
     actions: {},
     modules: {
         cardList,
+        user,
     },
 };
 export default new Vuex.Store(options);
