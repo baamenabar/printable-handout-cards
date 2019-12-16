@@ -1,6 +1,8 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import Router, { Route } from 'vue-router';
 import Home from './views/Home.vue';
+import store from '@/store';
+import { UserState } from './store/user/types';
 
 Vue.use(Router);
 
@@ -16,8 +18,19 @@ export default new Router({
         {
             path: '/login',
             name: 'login',
+
+            // to prevent getting to the /login when you are looged in already
+            // does not work really. the store is not readdy yet
+            beforeEnter: (to: Route, from: Route, next: any) => {
+                // poor typescript support from Vuex
+                if (!store.getters.isKnownUser) {
+                    next();
+                } else {
+                    next('/');
+                }
+            },
             component: () =>
-                import(/* webpackChunkName: "about" */ './views/Login.vue'),
+                import(/* webpackChunkName: "login" */ './views/Login.vue'),
         },
         {
             path: '/about',

@@ -4,13 +4,13 @@
             <li class="item" data-automation-id="item-one">
                 <router-link to="/">Home</router-link>
             </li>
-            <li class="item" data-automation-id="item-two">
+            <li class="item" v-if="!isKnownUser" data-automation-id="item-two">
                 <router-link to="/login">Login / Sign-up</router-link>
             </li>
-            <li class="item" data-automation-id="item-two">
+            <li class="item" v-if="isKnownUser" data-automation-id="item-three">
                 <a href="javascript:;" @click="logout">Logout</a>
             </li>
-            <li class="item" data-automation-id="item-three">
+            <li class="item" data-automation-id="item-four">
                 <router-link to="/about">About</router-link>
             </li>
         </ul>
@@ -19,14 +19,22 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Action } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 
 @Component({})
 export default class NavigationMenuComponent extends Vue {
     @Action('signUserOut', { namespace: 'user' }) signUserOut: any;
+    @Getter('isKnownUser', { namespace: 'user' }) isKnownUser!: boolean;
 
     logout() {
         this.signUserOut();
     }
 }
 </script>
+<style lang="scss" scoped>
+.item-collection {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+</style>

@@ -1,25 +1,24 @@
 import { UserState } from './types';
-import { Module, ActionTree, MutationTree } from 'vuex';
+import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { RootState } from '../types';
 import * as firebase from 'firebase/app';
-import { firebaseConfig } from '@/config/env.prod';
+import 'firebase/auth';
 
 const namespaced = true;
 type FirebaseUser = firebase.User;
 
 const userStateInitial: UserState = {
-    isLoggedIn: false,
+    isInitialized: false,
     isAnonymous: true,
     name: '',
     email: '',
+    userData: {},
 };
 
 const actions: ActionTree<UserState, RootState> = {
     userInit({ commit }): void {
-        firebase.initializeApp(firebaseConfig);
         firebase.auth().onAuthStateChanged(async firebaseUser => {
             if (firebaseUser) {
-                // tslint:disable:no-console
                 commit('userUpdate', firebaseUser);
             } else {
                 // if not logged in, then log in with the generic user.
@@ -43,9 +42,13 @@ const actions: ActionTree<UserState, RootState> = {
 
 const mutations: MutationTree<UserState> = {
     userUpdate(state: UserState, firebaseUser: FirebaseUser): void {
-        state.isLoggedIn = true;
+        state.isInitialized = true;
         state.isAnonymous = firebaseUser.isAnonymous;
         state.name = firebaseUser.displayName || '';
+        state.userData = {
+            displayName: firebaseUser.displayName || '',
+            avatarUrl: firebaseUser.photoURL || '',
+        };
         // tslint:disable:no-console
         console.log('user firebaseUser', firebaseUser);
     },
@@ -58,9 +61,21 @@ const mutations: MutationTree<UserState> = {
     },
 };
 
+const getters: GetterTree<UserState, RootState> = {
+    isKnownUser(state: UserState): boolean {
+        return !state.isAnonymous;
+    },
+    userDisplayData(state: UserState) {
+        return {
+            ...state.userData,
+        };
+    },
+};
+
 export const user: Module<UserState, RootState> = {
     namespaced,
     state: { ...userStateInitial },
     actions,
     mutations,
+    getters,
 };
