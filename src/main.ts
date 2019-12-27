@@ -6,6 +6,7 @@ import store from './store';
 import { firebaseConfig } from '@/config/env.prod';
 import './registerServiceWorker';
 
+// Set this to false to prevent the "production" console tip on Vue startup.
 Vue.config.productionTip = false;
 
 new Vue({

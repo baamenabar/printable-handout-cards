@@ -10,6 +10,7 @@ type FirebaseUser = firebase.User;
 const userStateInitial: UserState = {
     isInitialized: false,
     isAnonymous: true,
+    uid: '',
     name: '',
     email: '',
     userData: {},
@@ -19,7 +20,9 @@ const actions: ActionTree<UserState, RootState> = {
     userInit({ commit }): void {
         firebase.auth().onAuthStateChanged(async firebaseUser => {
             if (firebaseUser) {
-                commit('userUpdate', firebaseUser);
+                await commit('userUpdate', firebaseUser);
+                // request an update of cards list
+                this.dispatch('cardList/loadCards');
             } else {
                 // if not logged in, then log in with the generic user.
                 firebase.auth().signInAnonymously();
@@ -45,10 +48,12 @@ const mutations: MutationTree<UserState> = {
         state.isInitialized = true;
         state.isAnonymous = firebaseUser.isAnonymous;
         state.name = firebaseUser.displayName || '';
+        state.uid = firebaseUser.uid || '';
         state.userData = {
             displayName: firebaseUser.displayName || '',
             avatarUrl: firebaseUser.photoURL || '',
         };
+
         // tslint:disable:no-console
         console.log('user firebaseUser', firebaseUser);
     },

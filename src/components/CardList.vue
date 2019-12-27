@@ -1,23 +1,32 @@
 <template>
     <div class="list">
-        <CardComponent v-for="(card, i) of list" :card="card" :index="i" :key="card.slug"></CardComponent>
+        <CardComponent
+            v-for="(card, i) of list"
+            :card="card"
+            :index="i"
+            :key="card.slug"
+        ></CardComponent>
         <button
             type="button"
             class="add-btn btn"
             aria-label="add"
             @click="addCard()"
             data-automationid="add-button"
-        >+</button>
-        <p class="counter">add one card to the {{totalCards}} existing cards</p>
+        >
+            +
+        </button>
+        <p class="counter">
+            add one card to the {{ totalCards }} existing cards
+        </p>
     </div>
 </template>
 
-<script lang=ts>
+<script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { State, Action, Getter } from 'vuex-class';
 import CardComponent from './Card/Card.vue';
 import { Card } from './Card/CardInterface';
-import { cardList } from '../store/cards';
+import { cardList } from '../store/cards/cards';
 import { CardListState } from '../store/cards/types';
 
 // config for this instance of the store

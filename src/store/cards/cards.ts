@@ -3,6 +3,10 @@ import { CardListState, StoreCard } from './types';
 import { RootState } from '../types';
 import cardListData from '../../assets/cards.json';
 import { Card } from '@/components/Card/CardInterface';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import { UserState } from '../user/types';
+import { defaultUserUid } from '@/config/env.prod';
 
 const namespaced = true;
 
@@ -14,9 +18,29 @@ const cardListState: CardListState = {
 // we declare the actionsTree config
 const actions: ActionTree<CardListState, RootState> = {
     // probably used to initilize the data
-    loadCards({ commit }): void {
+    async loadCards({ commit, rootGetters }) {
+        const currentUser = (this.state as any).user as UserState;
+        const listOwnerUid = rootGetters['user/isKnownUser']
+            ? currentUser.uid
+            : defaultUserUid;
+        // tslint:disable:no-console
+        console.log('uid', rootGetters, currentUser.uid);
+        // get the card(s) from firestore
+        const cardsList = await firebase
+            .firestore()
+            .collection('cards')
+            .where('owner', '==', listOwnerUid)
+            .get()
+            .then(querySnapshot => {
+                const list: any[] = [];
+                querySnapshot.forEach(doc => {
+                    list.push(doc.data());
+                });
+                return list;
+            });
+
         // commit the mutation
-        commit('cardsLoaded', cardListData);
+        await commit('cardsLoaded', cardsList);
     },
     addCard({ commit }): void {
         commit('cardAdded');
@@ -42,7 +66,10 @@ const mutations: MutationTree<CardListState> = {
         });
     },
     cardRemoved(state: CardListState, slug: string): void {
-        state.list.splice(state.list.findIndex(card => card.slug === slug), 1);
+        state.list.splice(
+            state.list.findIndex(card => card.slug === slug),
+            1
+        );
     },
     cardUpdated(state: CardListState, payload: Card): void {
         const index = state.list.findIndex(card => card.slug === payload.slug);

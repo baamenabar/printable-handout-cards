@@ -8,3 +8,5 @@ export const firebaseConfig = {
     appId: '1:914975411839:web:1919887ad31fe55ea9f94a',
     measurementId: 'G-7QGJW7QTWP',
 };
+
+export const defaultUserUid = 'a6t8ooo1LSgT9dDUBPVjdImOWuP2';
