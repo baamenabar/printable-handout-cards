@@ -3,7 +3,9 @@ import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { RootState } from '../types';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import ulog from 'ulog';
 
+const log = ulog('store:cards');
 const namespaced = true;
 type FirebaseUser = firebase.User;
 
@@ -54,15 +56,13 @@ const mutations: MutationTree<UserState> = {
             avatarUrl: firebaseUser.photoURL || '',
         };
 
-        // tslint:disable:no-console
-        console.log('user firebaseUser', firebaseUser);
+        log.debug('user firebaseUser', firebaseUser);
     },
     userLogout(state: UserState): void {
         state = { ...userStateInitial };
     },
     userSignedUp(state: UserState, payload: any): void {
-        // tslint:disable:no-console
-        console.log('user signed up/in', payload);
+        log.debug('user signed up/in', payload);
     },
 };
 

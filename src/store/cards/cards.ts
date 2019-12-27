@@ -7,7 +7,9 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { UserState } from '../user/types';
 import { defaultUserUid } from '@/config/env.prod';
+import ulog from 'ulog';
 
+const log = ulog('store:cards');
 const namespaced = true;
 
 // we use this name to prevent typsecript from complaining about shadowed variables of "state".
@@ -23,8 +25,9 @@ const actions: ActionTree<CardListState, RootState> = {
         const listOwnerUid = rootGetters['user/isKnownUser']
             ? currentUser.uid
             : defaultUserUid;
-        // tslint:disable:no-console
-        console.log('uid', rootGetters, currentUser.uid);
+
+        log.debug('will request uid', currentUser.uid);
+
         // get the card(s) from firestore
         const cardsList = await firebase
             .firestore()
