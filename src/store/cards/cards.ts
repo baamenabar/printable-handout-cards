@@ -1,8 +1,8 @@
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
-import { CardListState, StoreCard } from './types';
+import { CardListState } from './types';
 import { RootState } from '../types';
 import cardListData from '../../assets/cards.json';
-import { Card } from '@/components/Card/CardInterface';
+import { Card } from '@/store/cards/CardInterface';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { UserState } from '../user/types';
@@ -10,18 +10,22 @@ import { defaultUserUid } from '@/config/env.prod';
 import ulog from 'ulog';
 
 const log = ulog('store:cards');
-const namespaced = true;
+const namespace = 'cards';
 
 // we use this name to prevent typsecript from complaining about shadowed variables of "state".
 const cardListState: CardListState = {
     list: [],
 };
 
+function getActiveUser(state: RootState): UserState {
+    return (state as any).user as UserState;
+}
+
 // we declare the actionsTree config
 const actions: ActionTree<CardListState, RootState> = {
     // probably used to initilize the data
     async loadCards({ commit, rootGetters }) {
-        const currentUser = (this.state as any).user as UserState;
+        const currentUser = getActiveUser(this.state);
         const listOwnerUid = rootGetters['user/isKnownUser']
             ? currentUser.uid
             : defaultUserUid;
@@ -31,13 +35,13 @@ const actions: ActionTree<CardListState, RootState> = {
         // get the card(s) from firestore
         const cardsList = await firebase
             .firestore()
-            .collection('cards')
+            .collection(namespace)
             .where('owner', '==', listOwnerUid)
             .get()
             .then(querySnapshot => {
                 const list: any[] = [];
                 querySnapshot.forEach(doc => {
-                    list.push(doc.data());
+                    list.push({ ...doc.data(), id: doc.id });
                 });
                 return list;
             });
@@ -45,37 +49,65 @@ const actions: ActionTree<CardListState, RootState> = {
         // commit the mutation
         await commit('cardsLoaded', cardsList);
     },
-    addCard({ commit }): void {
-        commit('cardAdded');
+    async addCard({ commit, rootGetters }) {
+        const currentUser = getActiveUser(this.state);
+        if (!currentUser.uid) {
+            throw new Error('Error: unknown user can not create new cards');
+        }
+        const newCard: Card = {
+            name: 'new card',
+            slug: '' + new Date().getTime(),
+            owner: currentUser.uid,
+            description: '',
+            imageUrl: '',
+            attributes: {},
+        };
+        const docRef = await firebase
+            .firestore()
+            .collection(namespace)
+            .add(newCard);
+        newCard.id = docRef.id;
+        commit('cardAdded', newCard);
     },
-    deleteCard({ commit }, slug: string): void {
-        commit('cardRemoved', slug);
+    deleteCard({ commit }, id: string): void {
+        firebase
+            .firestore()
+            .collection(namespace)
+            .doc(id)
+            .delete()
+            .catch(error => {
+                log.error('Failed deletion', error);
+            });
+        commit('cardRemoved', id);
     },
-    updateCardData({ commit }, payload: Card): void {
-        commit('cardUpdated', payload);
+    updateCardData({ commit }, card: Card): void {
+        firebase
+            .firestore()
+            .collection(namespace)
+            .doc(card.id)
+            .update({ ...card })
+            .catch(error => {
+                log.error('Failed update', error);
+            });
+        commit('cardUpdated', card);
     },
 };
 
 const mutations: MutationTree<CardListState> = {
-    cardsLoaded(state: CardListState, payload: StoreCard[]): void {
+    cardsLoaded(state: CardListState, payload: Card[]): void {
         state.list = payload;
     },
-    cardAdded(state: CardListState): void {
-        state.list.push({
-            name: 'new card',
-            slug: '' + new Date().getTime(),
-            description: '',
-            imageUrl: '',
-        });
+    cardAdded(state: CardListState, newCard: Card): void {
+        state.list.push(newCard);
     },
-    cardRemoved(state: CardListState, slug: string): void {
+    cardRemoved(state: CardListState, id: string): void {
         state.list.splice(
-            state.list.findIndex(card => card.slug === slug),
+            state.list.findIndex(card => card.id === id),
             1
         );
     },
     cardUpdated(state: CardListState, payload: Card): void {
-        const index = state.list.findIndex(card => card.slug === payload.slug);
+        const index = state.list.findIndex(card => card.id === payload.id);
         state.list[index] = { ...payload };
 
         // force triggering the "list" getter
@@ -99,7 +131,7 @@ const getters: GetterTree<CardListState, RootState> = {
 };
 
 export const cardList: Module<CardListState, RootState> = {
-    namespaced,
+    namespaced: true,
     state: cardListState,
     getters,
     actions,

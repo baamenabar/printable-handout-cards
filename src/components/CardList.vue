@@ -25,7 +25,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { State, Action, Getter } from 'vuex-class';
 import CardComponent from './Card/Card.vue';
-import { Card } from './Card/CardInterface';
+import { Card } from '../store/cards/CardInterface';
 import { cardList } from '../store/cards/cards';
 import { CardListState } from '../store/cards/types';
 

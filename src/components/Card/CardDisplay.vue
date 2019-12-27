@@ -33,7 +33,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { PropSync, Prop, Component, Watch } from 'vue-property-decorator';
-import { Card } from './CardInterface';
+import { Card } from '@/store/cards/CardInterface';
 import { Action } from 'vuex-class';
 import marked from 'marked';
 import dompurify from 'dompurify';
@@ -57,12 +57,13 @@ export default class CardDisplayComponent extends Vue {
 
     getData(): Card {
         return {
-            slug: this.item.slug,
+            ...this.item,
             name: (this.$refs.name as HTMLElement).innerText,
             imageUrl: (this.$refs.imageInput as HTMLInputElement).value,
             description: (this.$refs.descriptionEditor as HTMLInputElement)
                 .value,
         };
+
         // https://i.pinimg.com/236x/28/f6/7c/28f67c6da291522c8b49db26cbfe15ab.jpg
     }
 
