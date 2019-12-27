@@ -5,7 +5,7 @@
                 <router-link to="/">Home</router-link>
             </li>
             <li class="item" v-if="!isKnownUser" data-automation-id="item-two">
-                <router-link to="/login">Login / Sign-up</router-link>
+                <a href="javascript:;" @click="login">Login / Sign-up</a>
             </li>
             <li class="item" v-if="isKnownUser" data-automation-id="item-three">
                 <a href="javascript:;" @click="logout">Logout</a>
@@ -23,9 +23,20 @@ import { Action, Getter } from 'vuex-class';
 
 @Component({})
 export default class NavigationMenuComponent extends Vue {
+    @Action('signUserUp', { namespace: 'user' }) signUserUp: any;
     @Action('signUserOut', { namespace: 'user' }) signUserOut: any;
     @Getter('isKnownUser', { namespace: 'user' }) isKnownUser!: boolean;
 
+    /**
+     * Call the login / sign up process of firebase
+     */
+    login($event: Event) {
+        this.signUserUp();
+    }
+
+    /**
+     * calls the logout in the store
+     */
     logout() {
         this.signUserOut();
     }
