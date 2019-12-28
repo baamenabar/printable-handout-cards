@@ -33,6 +33,10 @@ export default class App extends Vue {}
     }
 }
 
+body {
+    margin: 0;
+}
+
 .btn {
     border: 1px solid rgb(61, 117, 139);
     background: rgb(109, 154, 250);

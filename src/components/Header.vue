@@ -21,11 +21,15 @@ import NavigationComponent from './Nav/Navigation.vue';
 export default class HeaderComponent extends Vue {}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header-container {
     display: flex;
     align-content: center;
     justify-content: flex-start;
+
+    @media print {
+        display: none;
+    }
 }
 .title {
     font-size: 20px;

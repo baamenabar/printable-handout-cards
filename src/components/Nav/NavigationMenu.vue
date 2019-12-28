@@ -1,17 +1,21 @@
 <template>
-    <div class="nav-menu-container">
+    <div>
         <ul class="item-collection">
             <li class="item" data-automation-id="item-one">
-                <router-link to="/">Home</router-link>
+                <router-link class="item-button" to="/">Home</router-link>
             </li>
             <li class="item" v-if="!isKnownUser" data-automation-id="item-two">
-                <a href="javascript:;" @click="login">Login / Sign-up</a>
+                <a class="item-button" href="javascript:;" @click="login"
+                    >Login / Sign-up</a
+                >
             </li>
             <li class="item" v-if="isKnownUser" data-automation-id="item-three">
-                <a href="javascript:;" @click="logout">Logout</a>
+                <a class="item-button" href="javascript:;" @click="logout"
+                    >Logout</a
+                >
             </li>
             <li class="item" data-automation-id="item-four">
-                <router-link to="/about">About</router-link>
+                <router-link class="item-button" to="/about">About</router-link>
             </li>
         </ul>
     </div>
@@ -43,9 +47,25 @@ export default class NavigationMenuComponent extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+@import '../../config/abstracts';
+
 .item-collection {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+.item-button {
+    display: block;
+    line-height: $length-base-module;
+    color: $color-text-base;
+    text-decoration: none;
+
+    &:hover,
+    &:active {
+        color: $color-text-active;
+        background: $color-bg-active;
+        text-decoration: none;
+    }
 }
 </style>
