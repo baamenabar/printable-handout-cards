@@ -1,11 +1,14 @@
 import { mount, Wrapper, createLocalVue } from '@vue/test-utils';
 import HeaderComponent from './Header.vue';
 import { qaDataAttrSelector } from '@/../tests/helper';
+import { storeOptionsMock } from '@/store/store.mock';
+import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 
-// set up localVue to use the Router
+// set up localVue to use the Router and Store
 const localVue = createLocalVue();
 localVue.use(VueRouter);
+localVue.use(Vuex);
 
 describe('Header.vue', () => {
     let wrapper: Wrapper<HeaderComponent>;
@@ -13,6 +16,7 @@ describe('Header.vue', () => {
     beforeEach(() => {
         wrapper = mount(HeaderComponent, {
             localVue,
+            store: new Vuex.Store(storeOptionsMock),
             router: new VueRouter({ routes: [], mode: 'history' }),
         });
     });
@@ -26,7 +30,8 @@ describe('Header.vue', () => {
                 .attributes('src') as string).substr(-4)
         ).toBe('.svg');
         expect(wrapper.find(qaDataAttrSelector('app-title')).text()).toBe(
-            'Printable Cards'
+            // Printable<br>Cards
+            'PrintableCards'
         );
     });
     it('Logo should have a link to the root route', () => {

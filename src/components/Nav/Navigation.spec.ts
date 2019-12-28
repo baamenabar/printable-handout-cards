@@ -19,7 +19,7 @@ describe('Navigation.vue', () => {
         );
     });
 
-    it('Should have a navigation menu component that is hidden by default', () => {
+    it('Should have a navigation menu component', () => {
         const navMenuComponent = wrapper.find({
             name: 'NavigationMenuComponent',
         });

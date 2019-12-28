@@ -1,21 +1,26 @@
 <template>
-  <div class="card">
-    <div class="toolbar">
-      <button
-        class="btn delete-btn"
-        aria-label="delete card"
-        v-if="editable"
-        @click="deleteCard(item.slug)"
-      >delete</button>
-      <button
-        class="btn edit-btn"
-        @click="editable = !editable"
-        aria-label="edit toggle"
-        v-text="editable ? 'save' : 'edit'"
-      ></button>
+    <div class="card">
+        <div class="toolbar">
+            <button
+                class="btn delete-btn"
+                aria-label="delete card"
+                v-if="editable"
+                @click="deleteCard(item.id)"
+            >
+                delete
+            </button>
+            <button
+                class="btn edit-btn"
+                @click="editable = !editable"
+                aria-label="edit toggle"
+                v-text="editable ? 'save' : 'edit'"
+            ></button>
+        </div>
+        <CardDisplayComponent
+            :item="item"
+            :editable="editable"
+        ></CardDisplayComponent>
     </div>
-    <CardDisplayComponent :item="item" :editable="editable"></CardDisplayComponent>
-  </div>
 </template>
 
 <script lang="ts">
@@ -23,7 +28,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { PropSync } from 'vue-property-decorator';
 import CardDisplayComponent from './CardDisplay.vue';
-import { Card } from './CardInterface';
+import { Card } from '@/store/cards/CardInterface';
 import { Action } from 'vuex-class';
 
 const namespace = 'cardList';

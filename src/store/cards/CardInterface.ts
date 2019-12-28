@@ -1,8 +1,9 @@
 export interface Card {
     name: string;
     slug: string;
-    weight?: string;
-    price?: number;
+    owner: string;
+    id?: string;
     description?: string;
     imageUrl?: string;
+    attributes: { [key: string]: any };
 }
