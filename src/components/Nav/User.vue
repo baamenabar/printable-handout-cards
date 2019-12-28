@@ -28,6 +28,7 @@ $avatarSide: 48px;
 .user {
     display: flex;
     flex-direction: row-reverse;
+    float: left;
 }
 .display-name {
     margin-right: 0.5em;

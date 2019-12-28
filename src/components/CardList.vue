@@ -1,5 +1,9 @@
 <template>
     <div class="list">
+        <div class="loading-wrapper" v-if="!list.length">
+            <h2>Loading...</h2>
+            <p>please wait</p>
+        </div>
         <CardComponent
             v-for="(card, i) of list"
             :card="card"
@@ -50,18 +54,26 @@ export default class CardListComponent extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '../config/abstracts';
 .list {
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    padding-bottom: $length-base-module;
+
     @media print {
         width: 21cm;
+        padding-bottom: 0;
+    }
+
+    @media screen and (min-width: $width-tablet) {
+        padding-bottom: 0;
     }
 }
 .add-btn {
     position: absolute;
     right: 5%;
-    bottom: 5%;
+    bottom: 1%;
     width: 2em;
     height: 2em;
     line-height: 1;
@@ -89,10 +101,52 @@ export default class CardListComponent extends Vue {
         box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.3);
         background-color: seagreen;
     }
+
+    @media print {
+        display: none;
+    }
+
+    @media screen and (min-width: $width-tablet) {
+        bottom: 5%;
+    }
+
+    & + .counter {
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        // magic nubers ahead
+        width: 148px;
+        right: 21%;
+        bottom: 0.5%;
+        text-align: left;
+        background: white;
+        padding: 4px 8px;
+        border: 1px aliceblue solid;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+        pointer-events: none;
+        transform: translate3d(12px, 0, 0);
+
+        @media screen and (min-width: $width-tablet) {
+            right: 118px;
+            bottom: 21px;
+        }
+    }
+    &:hover,
+    &:active {
+        & + .counter {
+            opacity: 1;
+            visibility: visible;
+            transform: translate3d(0, 0, 0);
+        }
+    }
 }
 .counter {
     position: absolute;
     bottom: 0;
     right: 20px;
+
+    @media print {
+        display: none;
+    }
 }
 </style>

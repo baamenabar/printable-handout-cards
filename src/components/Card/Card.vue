@@ -45,10 +45,13 @@ export default class CardComponent extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '../../config/abstracts';
+$card-width: 260px;
+
 .card {
     position: relative;
     box-sizing: border-box;
-    width: 260px;
+    width: 100%;
     border: 1px solid #999;
     margin: 1em 0.5em;
     padding: 6px 12px;
@@ -59,6 +62,10 @@ export default class CardComponent extends Vue {
     @media print {
         width: 33%;
         margin: 1em 0.151515%;
+    }
+
+    @media screen and (min-width: $width-tablet) {
+        width: $card-width;
     }
 }
 .toolbar {
