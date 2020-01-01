@@ -24,23 +24,36 @@ export default class UserComponent extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '../../config/abstracts';
 $avatarSide: 48px;
+
 .user {
     display: flex;
     flex-direction: row-reverse;
     float: left;
+    max-width: 60%;
+    max-height: $avatarSide;
+    overflow: hidden;
+    margin: $length-tiny 0;
+
+    @media screen and (max-width: $width-tablet) {
+        max-width: 180px;
+    }
 }
 .display-name {
-    margin-right: 0.5em;
+    margin: 0 0.5em 0 0;
+    line-height: 20px;
+    padding-top: 6px;
 }
 .avatar-container {
     overflow: hidden;
     border: 1px solid #ddd;
     border-radius: 50%;
+    flex-shrink: 0;
 }
 .avatar {
     display: block;
-    max-width: 100%;
+    width: $avatarSide;
     height: $avatarSide;
 }
 </style>
