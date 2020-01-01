@@ -31,13 +31,13 @@ $avatarSide: 48px;
     display: flex;
     flex-direction: row-reverse;
     float: left;
-    max-width: 60%;
+    max-width: 180px;
     max-height: $avatarSide;
     overflow: hidden;
     margin: $length-tiny 0;
 
-    @media screen and (max-width: $width-tablet) {
-        max-width: 180px;
+    @media screen and (min-width: $width-tablet) {
+        max-width: none;
     }
 }
 .display-name {
