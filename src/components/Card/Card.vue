@@ -49,6 +49,8 @@ export default class CardComponent extends Vue {
 $card-width: 260px;
 
 .card {
+    display: inline-block;
+    vertical-align: top;
     position: relative;
     box-sizing: border-box;
     width: 100%;
@@ -58,10 +60,12 @@ $card-width: 260px;
     text-align: left;
     background-color: #eee;
     box-shadow: 2px 2px 12px 0 rgba(black, 0.2);
+    break-inside: avoid;
 
     @media print {
-        width: 33%;
-        margin: 1em 0.151515%;
+        width: 6.6cm;
+        margin: 1em 0;
+        box-shadow: none;
     }
 
     @media screen and (min-width: $width-tablet) {

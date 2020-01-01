@@ -84,6 +84,10 @@ export default class CardDisplayComponent extends Vue {
     font-size: 20px;
     padding: 0.25em;
     color: #fff;
+
+    @media print {
+        margin-top: 0;
+    }
 }
 .fig__container {
     position: relative;
@@ -101,16 +105,27 @@ export default class CardDisplayComponent extends Vue {
     background: white;
     z-index: 1;
 }
+
 .fig__src-input-label {
     margin-right: 4px;
 }
+
 .fig__src-input {
     line-height: 1.75;
     flex-grow: 1;
 }
+
 .figure {
     width: 100%;
     max-width: 100%;
+}
+
+.description {
+    font-size: 11px;
+
+    @media print {
+        font-size: 10px;
+    }
 }
 
 .description-editor {

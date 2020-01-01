@@ -55,14 +55,14 @@ export default class CardListComponent extends Vue {
 
 <style lang="scss" scoped>
 @import '../config/abstracts';
+
 .list {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
+    text-align: left;
     padding-bottom: $length-base-module;
 
     @media print {
-        width: 21cm;
         padding-bottom: 0;
     }
 
@@ -70,6 +70,7 @@ export default class CardListComponent extends Vue {
         padding-bottom: 0;
     }
 }
+
 .add-btn {
     position: absolute;
     right: 5%;
